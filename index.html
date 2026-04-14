@@ -1253,32 +1253,83 @@
   .formats-intro .section-desc { color: rgba(255,255,255,0.65); }
   .formats-body { padding: 44px 60px; max-width: 900px; }
 
-  .formats-section-divider {
+  /* ── FORMAT SECTION ACCORDION ── */
+  .formats-section {
+    margin-bottom: 16px;
+    border-radius: 14px;
+    overflow: hidden;
+    border: 1.5px solid var(--border);
+  }
+  .formats-section:not(:first-child) { margin-top: 12px; }
+
+  .formats-section-header {
     display: flex;
     align-items: center;
-    gap: 16px;
-    margin: 0 0 28px;
+    justify-content: space-between;
+    padding: 22px 32px;
+    cursor: pointer;
+    user-select: none;
+    transition: background 0.2s;
   }
-  .formats-section-divider:not(:first-child) { margin-top: 48px; }
-  .formats-section-label {
-    font-size: 10px;
-    letter-spacing: 3.5px;
-    text-transform: uppercase;
+  .formats-section-header.pilates {
+    background: linear-gradient(135deg, #e8f4fd 0%, #f0f7ff 100%);
+    border-bottom: 1.5px solid var(--border);
+  }
+  .formats-section-header.barre {
+    background: linear-gradient(135deg, #faf0f6 0%, #fdf5fa 100%);
+    border-bottom: 1.5px solid var(--border);
+  }
+  .formats-section-header:hover.pilates { background: linear-gradient(135deg, #d4eaf8 0%, #e4f0fc 100%); }
+  .formats-section-header:hover.barre { background: linear-gradient(135deg, #f5e0ef 0%, #faeaf4 100%); }
+
+  .formats-section-header-left { display: flex; align-items: center; gap: 14px; }
+
+  .formats-section-icon {
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 17px;
+    flex-shrink: 0;
+  }
+  .formats-section-icon.pilates { background: var(--sky); color: white; }
+  .formats-section-icon.barre { background: var(--barre); color: white; }
+
+  .formats-section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 26px;
     font-weight: 600;
-    white-space: nowrap;
+    line-height: 1.1;
   }
-  .formats-section-label.pilates { color: var(--sky); }
-  .formats-section-label.barre { color: var(--barre); }
-  .formats-section-line {
-    flex: 1;
-    height: 1px;
+  .formats-section-title.pilates { color: var(--navy-deep); }
+  .formats-section-title.barre { color: var(--barre-deep); }
+
+  .formats-section-count {
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-top: 3px;
   }
-  .formats-section-line.pilates { background: linear-gradient(90deg, var(--sky-light), transparent); }
-  .formats-section-line.barre { background: linear-gradient(90deg, var(--barre-mid), transparent); }
+  .formats-section-count.pilates { color: var(--sky); }
+  .formats-section-count.barre { color: var(--barre); }
+
+  .formats-section-chevron {
+    font-size: 20px;
+    transition: transform 0.25s ease;
+    color: var(--gray);
+    line-height: 1;
+  }
+  .formats-section-chevron.open { transform: rotate(180deg); }
+
+  .formats-section-body {
+    display: none;
+    padding: 24px 24px 8px;
+    background: white;
+  }
+  .formats-section-body.open { display: block; animation: fadeIn 0.2s ease; }
 
   /* Barre format card accent */
-  #formatsBarreList .format-card-title { color: var(--barre-deep); }
-  #formatsBarreList .format-card:hover { box-shadow: 0 8px 32px rgba(176,92,138,0.12); }
+  .formats-section-body.barre-body .format-card-title { color: var(--barre-deep); }
+  .formats-section-body.barre-body .format-card:hover { box-shadow: 0 8px 32px rgba(176,92,138,0.12); }
 
   .format-card {
     background: white;
@@ -5886,22 +5937,30 @@
   </div>
   <div class="formats-body">
 
-    <!-- ── PILATES SECTION ── -->
-    <div class="formats-section-divider">
-      <span class="formats-section-label pilates">Pilates Classes</span>
-      <div class="formats-section-line pilates"></div>
-    </div>
-
-    <div class="format-card" id="fmt-foundations-pilates">
-      <div class="format-card-header" onclick="toggleFormatCard(this)">
-        <div>
-          <div class="format-card-title">COREFIT Foundations Pilates</div>
-          <div class="format-card-desc">A refined introduction to the COREFIT method. Perfect for beginners or anyone craving a strong foundation.</div>
+    <!-- ── PILATES SECTION ACCORDION ── -->
+    <div class="formats-section" id="formatsSectionPilates">
+      <div class="formats-section-header pilates" onclick="toggleFormatsSection('pilates')">
+        <div class="formats-section-header-left">
+          <div class="formats-section-icon pilates">✦</div>
+          <div>
+            <div class="formats-section-title pilates">Pilates Classes</div>
+            <div class="formats-section-count pilates" id="pilatesFormatCount">3 formats</div>
+          </div>
         </div>
-        <button class="expand-btn">＋</button>
+        <div class="formats-section-chevron" id="pilatesChevron">&#8964;</div>
       </div>
-      <div class="format-card-body">
-        <div class="format-body-text">This slower-paced, precision-focused class breaks down the fundamentals of a COREFIT Pilates workout, focusing on proper form, alignment, and building confidence without sacrificing the burn.
+      <div class="formats-section-body" id="formatsPilatesBody">
+
+        <div class="format-card" id="fmt-foundations-pilates">
+          <div class="format-card-header" onclick="toggleFormatCard(this)">
+            <div>
+              <div class="format-card-title">COREFIT Foundations Pilates</div>
+              <div class="format-card-desc">A refined introduction to the COREFIT method. Perfect for beginners or anyone craving a strong foundation.</div>
+            </div>
+            <button class="expand-btn">＋</button>
+          </div>
+          <div class="format-card-body">
+            <div class="format-body-text">This slower-paced, precision-focused class breaks down the fundamentals of a COREFIT Pilates workout, focusing on proper form, alignment, and building confidence without sacrificing the burn.
 
 CLASS FOCUS
 — Proper form and alignment
@@ -5911,19 +5970,19 @@ CLASS FOCUS
 
 WHO IT'S FOR
 Beginners or anyone returning to Pilates who wants to understand the COREFIT method before advancing to Power Pilates.</div>
-      </div>
-    </div>
-
-    <div class="format-card" id="fmt-power-pilates">
-      <div class="format-card-header" onclick="toggleFormatCard(this)">
-        <div>
-          <div class="format-card-title">COREFIT Power Pilates (45 min)</div>
-          <div class="format-card-desc">The signature COREFIT Pilates sweat session. Full-body, elevated strength training — efficient, effective, and results-driven.</div>
+          </div>
         </div>
-        <button class="expand-btn">＋</button>
-      </div>
-      <div class="format-card-body">
-        <div class="format-body-text">Our full-body experience delivers 45 minutes of elevated strength training, seamlessly targeting every major muscle group using low-impact and high-intensity. Designed for those who expect more from their workout — efficient, effective, and unapologetically results-driven.
+
+        <div class="format-card" id="fmt-power-pilates">
+          <div class="format-card-header" onclick="toggleFormatCard(this)">
+            <div>
+              <div class="format-card-title">COREFIT Power Pilates (45 min)</div>
+              <div class="format-card-desc">The signature COREFIT Pilates sweat session. Full-body, elevated strength training — efficient, effective, and results-driven.</div>
+            </div>
+            <button class="expand-btn">＋</button>
+          </div>
+          <div class="format-card-body">
+            <div class="format-body-text">Our full-body experience delivers 45 minutes of elevated strength training, seamlessly targeting every major muscle group using low-impact and high-intensity. Designed for those who expect more from their workout — efficient, effective, and unapologetically results-driven.
 
 CLASS FOCUS
 — Full-body strength and conditioning
@@ -5933,19 +5992,19 @@ CLASS FOCUS
 
 WHO IT'S FOR
 All levels ready to work. The signature COREFIT class for clients who expect results.</div>
-      </div>
-    </div>
-
-    <div class="format-card" id="fmt-express-pilates">
-      <div class="format-card-header" onclick="toggleFormatCard(this)">
-        <div>
-          <div class="format-card-title">COREFIT Express Pilates (30 min)</div>
-          <div class="format-card-desc">Same energy and effectiveness as Power Pilates, packed into 30 minutes. Fewer moves, longer holds — same intense burn.</div>
+          </div>
         </div>
-        <button class="expand-btn">＋</button>
-      </div>
-      <div class="format-card-body">
-        <div class="format-body-text">For those with tight schedules, COREFIT Express Pilates provides the same energy and effectiveness of our Signature Power Pilates Class, just packed into 30 minutes. Our POWER PILATES Express class utilizes fewer moves with longer holds. A shorter class but same intense burn and amazing results.
+
+        <div class="format-card" id="fmt-express-pilates">
+          <div class="format-card-header" onclick="toggleFormatCard(this)">
+            <div>
+              <div class="format-card-title">COREFIT Express Pilates (30 min)</div>
+              <div class="format-card-desc">Same energy and effectiveness as Power Pilates, packed into 30 minutes. Fewer moves, longer holds — same intense burn.</div>
+            </div>
+            <button class="expand-btn">＋</button>
+          </div>
+          <div class="format-card-body">
+            <div class="format-body-text">For those with tight schedules, COREFIT Express Pilates provides the same energy and effectiveness of our Signature Power Pilates Class, just packed into 30 minutes. Our POWER PILATES Express class utilizes fewer moves with longer holds. A shorter class but same intense burn and amazing results.
 
 CLASS FOCUS
 — Condensed Power Pilates format
@@ -5955,28 +6014,39 @@ CLASS FOCUS
 
 WHO IT'S FOR
 Clients with tight schedules who refuse to compromise on results.</div>
-      </div>
-    </div>
-
-    <!-- DB-loaded Pilates formats -->
-    <div id="formatsPilatesList"></div>
-
-    <!-- ── BARRE SECTION ── -->
-    <div class="formats-section-divider">
-      <span class="formats-section-label barre">Barre Classes</span>
-      <div class="formats-section-line barre"></div>
-    </div>
-
-    <div class="format-card" id="fmt-smart-45">
-      <div class="format-card-header" onclick="toggleFormatCard(this)">
-        <div>
-          <div class="format-card-title">Smart 45</div>
-          <div class="format-card-desc">A full barre class structured into timed sections using music as your guide. Equipment recommended to maximize intensity.</div>
+          </div>
         </div>
-        <button class="expand-btn">＋</button>
+
+        <!-- DB-loaded Pilates formats -->
+        <div id="formatsPilatesList"></div>
+
       </div>
-      <div class="format-card-body">
-        <div class="format-body-text">ORDER OF SECTIONS
+    </div>
+
+    <!-- ── BARRE SECTION ACCORDION ── -->
+    <div class="formats-section" id="formatsSectionBarre">
+      <div class="formats-section-header barre" onclick="toggleFormatsSection('barre')">
+        <div class="formats-section-header-left">
+          <div class="formats-section-icon barre">✦</div>
+          <div>
+            <div class="formats-section-title barre">Barre Classes</div>
+            <div class="formats-section-count barre" id="barreFormatCount">1 format</div>
+          </div>
+        </div>
+        <div class="formats-section-chevron" id="barreChevron">&#8964;</div>
+      </div>
+      <div class="formats-section-body barre-body" id="formatsBarreBody">
+
+        <div class="format-card" id="fmt-smart-45">
+          <div class="format-card-header" onclick="toggleFormatCard(this)">
+            <div>
+              <div class="format-card-title">Smart 45</div>
+              <div class="format-card-desc">A full barre class structured into timed sections using music as your guide. Equipment recommended to maximize intensity.</div>
+            </div>
+            <button class="expand-btn">＋</button>
+          </div>
+          <div class="format-card-body">
+            <div class="format-body-text">ORDER OF SECTIONS
 — Warm Up / Push Up / Planks · 3:30–4 min · 1 song
 — Arms · 4–5 min · 1 song
 — Legs · 10–11 min · 3 songs
@@ -5991,11 +6061,14 @@ INSTRUCTOR NOTES
 3. Back Dancing is added to the end of ab work, no longer than 2 minutes. Make it "power" back dancing — intensify since the section is brief
 
 REMEMBER: Smooth transitions and flow will maximize the Smart 45 workout for clients!</div>
+          </div>
+        </div>
+
+        <!-- DB-loaded Barre formats -->
+        <div id="formatsBarreList"></div>
+
       </div>
     </div>
-
-    <!-- DB-loaded Barre formats -->
-    <div id="formatsBarreList"></div>
 
   </div>
 </div><!-- /panelFormats -->
@@ -6364,10 +6437,23 @@ REMEMBER: Smooth transitions and flow will maximize the Smart 45 workout for cli
       });
 
       window._cfFormats = formats;
+      cfUpdateFormatCounts();
       if (document.getElementById('panelAdmin').classList.contains('active')) {
         cfRenderAdminFormatList(formats);
       }
     });
+  }
+
+  // ── FORMAT SECTION ACCORDION ──
+  function toggleFormatsSection(type) {
+    var bodyId = type === 'barre' ? 'formatsBarreBody' : 'formatsPilatesBody';
+    var chevronId = type === 'barre' ? 'barreChevron' : 'pilatesChevron';
+    var body = document.getElementById(bodyId);
+    var chevron = document.getElementById(chevronId);
+    if (!body) return;
+    var isOpen = body.classList.contains('open');
+    body.classList.toggle('open', !isOpen);
+    if (chevron) chevron.classList.toggle('open', !isOpen);
   }
 
   // ── FORMAT CARD TOGGLE ──
@@ -6377,6 +6463,16 @@ REMEMBER: Smooth transitions and flow will maximize the Smart 45 workout for cli
     var isOpen = body.classList.contains('open');
     body.classList.toggle('open');
     btn.textContent = isOpen ? '＋' : '－';
+  }
+
+  // ── UPDATE FORMAT SECTION COUNTS ──
+  function cfUpdateFormatCounts() {
+    var pilatesCards = document.querySelectorAll('#formatsPilatesBody .format-card').length;
+    var barreCards = document.querySelectorAll('#formatsBarreBody .format-card').length;
+    var pc = document.getElementById('pilatesFormatCount');
+    var bc = document.getElementById('barreFormatCount');
+    if (pc) pc.textContent = pilatesCards + (pilatesCards === 1 ? ' format' : ' formats');
+    if (bc) bc.textContent = barreCards + (barreCards === 1 ? ' format' : ' formats');
   }
 
   // ── ADMIN FUNCTIONS ──
