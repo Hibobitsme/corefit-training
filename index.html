@@ -1253,6 +1253,33 @@
   .formats-intro .section-desc { color: rgba(255,255,255,0.65); }
   .formats-body { padding: 44px 60px; max-width: 900px; }
 
+  .formats-section-divider {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin: 0 0 28px;
+  }
+  .formats-section-divider:not(:first-child) { margin-top: 48px; }
+  .formats-section-label {
+    font-size: 10px;
+    letter-spacing: 3.5px;
+    text-transform: uppercase;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+  .formats-section-label.pilates { color: var(--sky); }
+  .formats-section-label.barre { color: var(--barre); }
+  .formats-section-line {
+    flex: 1;
+    height: 1px;
+  }
+  .formats-section-line.pilates { background: linear-gradient(90deg, var(--sky-light), transparent); }
+  .formats-section-line.barre { background: linear-gradient(90deg, var(--barre-mid), transparent); }
+
+  /* Barre format card accent */
+  #formatsBarreList .format-card-title { color: var(--barre-deep); }
+  #formatsBarreList .format-card:hover { box-shadow: 0 8px 32px rgba(176,92,138,0.12); }
+
   .format-card {
     background: white;
     border: 1px solid var(--border);
@@ -5859,7 +5886,12 @@
   </div>
   <div class="formats-body">
 
-    <!-- COREFIT FOUNDATIONS PILATES -->
+    <!-- ── PILATES SECTION ── -->
+    <div class="formats-section-divider">
+      <span class="formats-section-label pilates">Pilates Classes</span>
+      <div class="formats-section-line pilates"></div>
+    </div>
+
     <div class="format-card" id="fmt-foundations-pilates">
       <div class="format-card-header" onclick="toggleFormatCard(this)">
         <div>
@@ -5882,7 +5914,6 @@ Beginners or anyone returning to Pilates who wants to understand the COREFIT met
       </div>
     </div>
 
-    <!-- COREFIT POWER PILATES -->
     <div class="format-card" id="fmt-power-pilates">
       <div class="format-card-header" onclick="toggleFormatCard(this)">
         <div>
@@ -5905,7 +5936,6 @@ All levels ready to work. The signature COREFIT class for clients who expect res
       </div>
     </div>
 
-    <!-- COREFIT EXPRESS PILATES -->
     <div class="format-card" id="fmt-express-pilates">
       <div class="format-card-header" onclick="toggleFormatCard(this)">
         <div>
@@ -5928,7 +5958,15 @@ Clients with tight schedules who refuse to compromise on results.</div>
       </div>
     </div>
 
-    <!-- SMART 45 -->
+    <!-- DB-loaded Pilates formats -->
+    <div id="formatsPilatesList"></div>
+
+    <!-- ── BARRE SECTION ── -->
+    <div class="formats-section-divider">
+      <span class="formats-section-label barre">Barre Classes</span>
+      <div class="formats-section-line barre"></div>
+    </div>
+
     <div class="format-card" id="fmt-smart-45">
       <div class="format-card-header" onclick="toggleFormatCard(this)">
         <div>
@@ -5956,10 +5994,8 @@ REMEMBER: Smooth transitions and flow will maximize the Smart 45 workout for cli
       </div>
     </div>
 
-    <!-- Dynamic DB-loaded formats inject here -->
-    <div id="formatsCardList"></div>
-
-    <div id="formatsEmpty" style="display:none;text-align:center;padding:48px 0;color:var(--gray);font-size:14px;">No additional class formats found.</div>
+    <!-- DB-loaded Barre formats -->
+    <div id="formatsBarreList"></div>
 
   </div>
 </div><!-- /panelFormats -->
@@ -6054,6 +6090,15 @@ REMEMBER: Smooth transitions and flow will maximize the Smart 45 workout for cli
           <label class="admin-label">Title *</label>
           <input class="admin-input" id="adminFmtTitle" placeholder="e.g. Prenatal Pilates (45 min)" />
         </div>
+        <div class="admin-field">
+          <label class="admin-label">Class Type *</label>
+          <select class="admin-select" id="adminFmtType">
+            <option value="pilates">Pilates</option>
+            <option value="barre">Barre</option>
+          </select>
+        </div>
+      </div>
+      <div class="admin-row">
         <div class="admin-field">
           <label class="admin-label">Sort Order</label>
           <input class="admin-input" id="adminFmtSort" type="number" value="0" />
@@ -6284,32 +6329,40 @@ REMEMBER: Smooth transitions and flow will maximize the Smart 45 workout for cli
     });
   }
 
+  function cfBuildFormatCardHTML(fmt) {
+    return '<div class="format-card" id="fmt-db-' + fmt.id + '">' +
+      '<div class="format-card-header" onclick="toggleFormatCard(this)">' +
+        '<div>' +
+          '<div class="format-card-title">' + fmt.title + '</div>' +
+          '<div class="format-card-desc">' + (fmt.description || '') + '</div>' +
+        '</div>' +
+        '<button class="expand-btn">＋</button>' +
+      '</div>' +
+      '<div class="format-card-body">' +
+        '<div class="format-body-text">' + fmt.body + '</div>' +
+      '</div>' +
+    '</div>';
+  }
+
   function cfLoadClassFormats() {
     if (!_sb) return Promise.resolve();
     return _sb.from('class_formats').select('*').order('sort_order').then(function(result) {
       if (result.error) { console.error('Class formats load error:', result.error); return; }
       var formats = result.data || [];
-      var list = document.getElementById('formatsCardList');
-      if (list) {
-        list.innerHTML = '';
-        formats.forEach(function(fmt) {
-          var card = document.createElement('div');
-          card.className = 'format-card';
-          card.id = 'fmt-db-' + fmt.id;
-          card.innerHTML =
-            '<div class="format-card-header" onclick="toggleFormatCard(this)">' +
-              '<div>' +
-                '<div class="format-card-title">' + fmt.title + '</div>' +
-                '<div class="format-card-desc">' + (fmt.description || '') + '</div>' +
-              '</div>' +
-              '<button class="expand-btn">＋</button>' +
-            '</div>' +
-            '<div class="format-card-body">' +
-              '<div class="format-body-text">' + fmt.body + '</div>' +
-            '</div>';
-          list.appendChild(card);
-        });
-      }
+
+      var pilatesList = document.getElementById('formatsPilatesList');
+      var barreList = document.getElementById('formatsBarreList');
+      if (pilatesList) pilatesList.innerHTML = '';
+      if (barreList) barreList.innerHTML = '';
+
+      formats.forEach(function(fmt) {
+        var html = cfBuildFormatCardHTML(fmt);
+        var tmp = document.createElement('div');
+        tmp.innerHTML = html;
+        var target = (fmt.type === 'barre') ? barreList : pilatesList;
+        if (target) target.appendChild(tmp.firstChild);
+      });
+
       window._cfFormats = formats;
       if (document.getElementById('panelAdmin').classList.contains('active')) {
         cfRenderAdminFormatList(formats);
@@ -6440,6 +6493,7 @@ REMEMBER: Smooth transitions and flow will maximize the Smart 45 workout for cli
     document.getElementById('adminFormatFormTitle').textContent = fmt ? 'Edit Class Format' : 'New Class Format';
     document.getElementById('adminFormatId').value = fmt ? (fmt.id || '') : '';
     document.getElementById('adminFmtTitle').value = fmt ? (fmt.title || '') : '';
+    document.getElementById('adminFmtType').value = fmt ? (fmt.type || 'pilates') : 'pilates';
     document.getElementById('adminFmtDesc').value = fmt ? (fmt.description || '') : '';
     document.getElementById('adminFmtBody').value = fmt ? (fmt.body || '') : '';
     document.getElementById('adminFmtSort').value = fmt ? (fmt.sort_order || 0) : 0;
@@ -6461,6 +6515,7 @@ REMEMBER: Smooth transitions and flow will maximize the Smart 45 workout for cli
     var id = document.getElementById('adminFormatId').value;
     var payload = {
       title: title,
+      type: document.getElementById('adminFmtType').value || 'pilates',
       description: document.getElementById('adminFmtDesc').value.trim() || null,
       body: body,
       sort_order: parseInt(document.getElementById('adminFmtSort').value) || 0,
@@ -6502,10 +6557,11 @@ REMEMBER: Smooth transitions and flow will maximize the Smart 45 workout for cli
       return;
     }
     list.innerHTML = formats.map(function(f) {
+      var typeLabel = f.type === 'barre' ? 'Barre' : 'Pilates';
       return '<div class="admin-list-item">' +
         '<div class="admin-list-item-info">' +
           '<div class="admin-list-item-title">' + f.title + '</div>' +
-          '<div class="admin-list-item-sub">' + (f.description || '') + '</div>' +
+          '<div class="admin-list-item-sub">' + typeLabel + (f.description ? ' · ' + f.description : '') + '</div>' +
         '</div>' +
         '<div class="admin-list-actions">' +
           '<button class="admin-btn admin-btn-edit" onclick="cfAdminShowFormatForm(' + JSON.stringify(f).replace(/"/g,'&quot;') + ')">Edit</button>' +
