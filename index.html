@@ -1301,6 +1301,235 @@ footer strong { color: rgba(255,255,255,0.5); }
   .hero h1 { font-size: 34px; }
   .stat { padding: 16px 22px; }
 }
+
+/* ════════════════════════════════════════════════════════
+   DASHBOARD v3
+   ════════════════════════════════════════════════════════ */
+.dash-hero {
+  background:
+    radial-gradient(ellipse at 72% 36%, rgba(33,150,243,0.14) 0%, transparent 58%),
+    radial-gradient(ellipse at 16% 82%, rgba(173,83,137,0.09) 0%, transparent 52%),
+    linear-gradient(148deg, var(--navy) 0%, var(--navy-mid) 55%, #162d50 100%);
+  padding: 64px 64px 60px;
+  position: relative; overflow: hidden;
+}
+.dash-hero::before {
+  content: ''; position: absolute;
+  top: -100px; right: -80px;
+  width: 520px; height: 520px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(33,150,243,0.07) 0%, transparent 65%);
+  pointer-events: none; animation: orbFloat 14s ease-in-out infinite;
+}
+.dash-welcome-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(33,150,243,0.1); border: 1px solid rgba(33,150,243,0.22);
+  color: rgba(100,181,246,0.88); padding: 5px 16px;
+  border-radius: var(--r-pill); font-size: 10px; letter-spacing: 2.5px;
+  text-transform: uppercase; font-weight: 600; margin-bottom: 22px;
+}
+.dash-badge-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--sky-light); flex-shrink: 0;
+  animation: cfPulse 2s ease-in-out infinite;
+}
+@keyframes cfPulse {
+  0%,100% { opacity:1; transform:scale(1); }
+  50%      { opacity:0.45; transform:scale(0.7); }
+}
+.dash-hero-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 52px; font-weight: 700; color: white;
+  line-height: 1.05; margin-bottom: 16px; letter-spacing: -0.5px; max-width: 700px;
+}
+.dash-hero-sub {
+  color: rgba(255,255,255,0.47); font-size: 15px; font-weight: 300;
+  max-width: 520px; line-height: 1.82; margin-bottom: 38px;
+}
+.dash-hero-actions { display: flex; gap: 14px; flex-wrap: wrap; }
+.dash-cta-primary {
+  padding: 13px 28px; background: linear-gradient(145deg, var(--sky), #1565c0);
+  color: white; border: none; border-radius: var(--r-md);
+  font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 700; letter-spacing: 0.6px;
+  cursor: pointer; transition: transform var(--t-fast), box-shadow var(--t-fast);
+  box-shadow: 0 6px 20px rgba(33,150,243,0.38), inset 0 1px 0 rgba(255,255,255,0.14);
+  position: relative; overflow: hidden;
+}
+.dash-cta-primary::after {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(180deg, rgba(255,255,255,0.12) 0%, transparent 60%);
+  pointer-events: none;
+}
+.dash-cta-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 28px rgba(33,150,243,0.46); }
+.dash-cta-secondary {
+  padding: 13px 26px; background: rgba(255,255,255,0.07);
+  color: rgba(255,255,255,0.78); border: 1.5px solid rgba(255,255,255,0.11);
+  border-radius: var(--r-md); font-family: 'DM Sans', sans-serif;
+  font-size: 13px; font-weight: 600; letter-spacing: 0.4px;
+  cursor: pointer; transition: all var(--t-base);
+}
+.dash-cta-secondary:hover { background: rgba(255,255,255,0.13); color: white; }
+/* Progress Rings */
+.dash-progress-section {
+  display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 18px;
+  padding: 32px 64px; background: var(--white); border-bottom: 1px solid var(--border);
+}
+.dash-ring-card {
+  background: var(--bg); border-radius: var(--r-xl); padding: 26px 24px;
+  display: flex; align-items: center; gap: 20px;
+  border: 1.5px solid var(--border-soft); box-shadow: var(--shadow-xs);
+  transition: box-shadow var(--t-base), transform var(--t-base);
+}
+.dash-ring-card:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); }
+.dash-ring-wrap { position: relative; width: 96px; height: 96px; flex-shrink: 0; }
+.dash-ring { transform: rotate(-90deg); width: 100%; height: 100%; }
+.ring-bg   { fill: none; stroke: var(--bg-alt); stroke-width: 7; }
+.ring-fill {
+  fill: none; stroke-width: 7; stroke-linecap: round;
+  stroke-dasharray: 326.73; stroke-dashoffset: 326.73;
+  transition: stroke-dashoffset 1.4s cubic-bezier(0.34,1.2,0.64,1);
+}
+.ring-pilates { stroke: var(--sky); filter: drop-shadow(0 0 5px rgba(33,150,243,0.45)); }
+.ring-barre   { stroke: var(--barre); filter: drop-shadow(0 0 5px rgba(173,83,137,0.4)); }
+.dash-ring-center {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+}
+.dash-ring-pct {
+  font-family: 'Cormorant Garamond', serif; font-size: 20px; font-weight: 700;
+  color: var(--ink); line-height: 1;
+}
+.dash-ring-label { font-size: 8px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--gray-1); font-weight: 600; margin-top: 2px; }
+.dash-ring-info { flex: 1; min-width: 0; }
+.dash-ring-module-tag {
+  display: inline-block; padding: 2px 10px; border-radius: var(--r-pill);
+  font-size: 9px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 8px;
+}
+.dash-ring-module-tag.sky   { background: var(--sky-pale); color: #1565c0; }
+.dash-ring-module-tag.barre { background: var(--barre-pale); color: var(--barre-deep); }
+.dash-ring-title { font-family: 'Cormorant Garamond', serif; font-size: 19px; font-weight: 700; color: var(--ink); margin-bottom: 3px; }
+.dash-ring-count { font-size: 11px; color: var(--gray-2); margin-bottom: 14px; }
+.dash-ring-btn {
+  padding: 7px 16px; border: none; border-radius: var(--r-pill);
+  font-family: 'DM Sans', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 0.6px;
+  cursor: pointer; transition: all var(--t-base);
+}
+.dash-ring-btn.sky   { background: var(--sky-pale); color: var(--sky); }
+.dash-ring-btn.sky:hover   { background: var(--sky); color: white; box-shadow: 0 4px 14px rgba(33,150,243,0.38); transform: translateY(-1px); }
+.dash-ring-btn.barre { background: var(--barre-pale); color: var(--barre-deep); }
+.dash-ring-btn.barre:hover { background: var(--barre); color: white; box-shadow: 0 4px 14px rgba(173,83,137,0.32); transform: translateY(-1px); }
+/* Stats card */
+.dash-stats-card {
+  background: linear-gradient(145deg, var(--navy) 0%, var(--navy-mid) 100%);
+  border-radius: var(--r-xl); padding: 26px 28px;
+  display: flex; flex-direction: column; justify-content: space-around;
+  border: 1px solid rgba(255,255,255,0.06); box-shadow: var(--shadow-md);
+}
+.dash-stat-row { display: flex; align-items: center; gap: 16px; }
+.dash-stat-big { font-family: 'Cormorant Garamond', serif; font-size: 34px; font-weight: 700; color: white; min-width: 56px; line-height: 1; }
+.dash-stat-label { font-size: 10px; letter-spacing: 1px; text-transform: uppercase; color: rgba(255,255,255,0.38); font-weight: 600; line-height: 1.5; }
+.dash-stat-divider { height: 1px; background: rgba(255,255,255,0.07); margin: 10px 0; }
+/* Training Modules */
+.dash-modules-section { padding: 48px 64px 0; background: var(--bg); }
+.dash-section-header { margin-bottom: 24px; }
+.dash-section-header h2 { font-family: 'Cormorant Garamond', serif; font-size: 30px; font-weight: 700; color: var(--ink); letter-spacing: -0.3px; margin-bottom: 4px; }
+.dash-section-header p { font-size: 14px; color: var(--gray-2); }
+.dash-modules-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(268px, 1fr)); gap: 18px; }
+.dash-module-card {
+  background: var(--white); border-radius: var(--r-xl); padding: 30px;
+  border: 1.5px solid var(--border-soft); box-shadow: var(--shadow-sm);
+  transition: box-shadow var(--t-base), transform var(--t-base);
+  position: relative; overflow: hidden; display: flex; flex-direction: column;
+}
+.dash-module-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; }
+.dash-module-pilates::before { background: linear-gradient(90deg, var(--sky), var(--sky-light)); }
+.dash-module-barre::before   { background: linear-gradient(90deg, var(--barre), var(--barre-mid)); }
+.dash-module-formats::before { background: linear-gradient(90deg, #10b981, #6ee7b7); }
+.dash-module-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-lg); }
+.dash-module-badge { display: inline-block; padding: 3px 12px; border-radius: var(--r-pill); font-size: 9px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 14px; }
+.dash-module-pilates .dash-module-badge { background: var(--sky-pale); color: #1565c0; }
+.dash-module-barre   .dash-module-badge { background: var(--barre-pale); color: var(--barre-deep); }
+.dash-module-formats .dash-module-badge { background: #ecfdf5; color: #065f46; }
+.dash-module-card h3 { font-family: 'Cormorant Garamond', serif; font-size: 24px; font-weight: 700; color: var(--ink); margin-bottom: 10px; letter-spacing: -0.2px; }
+.dash-module-card p  { font-size: 13.5px; color: var(--gray-2); line-height: 1.72; margin-bottom: 22px; flex: 1; }
+.dash-module-progress-wrap { margin-top: auto; }
+.dash-module-progress { height: 5px; background: var(--bg-alt); border-radius: var(--r-pill); overflow: hidden; margin-bottom: 8px; }
+.dash-module-progress-fill { height: 100%; border-radius: var(--r-pill); transition: width 1.1s cubic-bezier(0.34,1.2,0.64,1); }
+.dash-module-pilates .dash-module-progress-fill { background: linear-gradient(90deg, var(--sky), var(--sky-light)); box-shadow: 0 0 8px rgba(33,150,243,0.45); }
+.dash-module-barre   .dash-module-progress-fill { background: linear-gradient(90deg, var(--barre), var(--barre-mid)); box-shadow: 0 0 8px rgba(173,83,137,0.38); }
+.dash-module-meta { display: flex; justify-content: space-between; font-size: 10px; color: var(--gray-1); font-weight: 600; letter-spacing: 0.3px; margin-bottom: 20px; }
+.dash-module-btn {
+  display: flex; align-items: center; justify-content: space-between;
+  width: 100%; padding: 12px 18px; border: none; border-radius: var(--r-md);
+  font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 700; letter-spacing: 0.4px;
+  cursor: pointer; transition: all var(--t-base); gap: 8px;
+}
+.dash-module-pilates .dash-module-btn { background: var(--sky); color: white; box-shadow: 0 4px 16px rgba(33,150,243,0.32); }
+.dash-module-pilates .dash-module-btn:hover { box-shadow: 0 8px 24px rgba(33,150,243,0.46); transform: translateY(-1px); }
+.dash-module-barre   .dash-module-btn { background: var(--barre); color: white; box-shadow: 0 4px 16px rgba(173,83,137,0.3); }
+.dash-module-barre   .dash-module-btn:hover { box-shadow: 0 8px 24px rgba(173,83,137,0.42); transform: translateY(-1px); }
+.dash-module-formats .dash-module-btn { background: #10b981; color: white; box-shadow: 0 4px 16px rgba(16,185,129,0.28); }
+.dash-module-formats .dash-module-btn:hover { box-shadow: 0 8px 24px rgba(16,185,129,0.42); transform: translateY(-1px); }
+/* Bottom: Next Up + Tip */
+.dash-bottom-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; padding: 18px 64px 52px; background: var(--bg); }
+.dash-next-card {
+  background: linear-gradient(145deg, var(--navy) 0%, var(--navy-mid) 100%);
+  border-radius: var(--r-xl); padding: 32px;
+  border: 1px solid rgba(255,255,255,0.06); box-shadow: var(--shadow-md);
+  position: relative; overflow: hidden; display: flex; flex-direction: column;
+}
+.dash-next-card::after {
+  content: ''; position: absolute; top: -60px; right: -50px;
+  width: 220px; height: 220px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(33,150,243,0.1) 0%, transparent 70%);
+  animation: orbFloat 9s ease-in-out infinite; pointer-events: none;
+}
+.dash-next-label { font-size: 9px; letter-spacing: 2.5px; text-transform: uppercase; color: rgba(100,181,246,0.75); font-weight: 700; margin-bottom: 14px; }
+.dash-next-exercise { font-family: 'Cormorant Garamond', serif; font-size: 28px; font-weight: 700; color: white; line-height: 1.15; margin-bottom: 8px; }
+.dash-next-sub { font-size: 13px; color: rgba(255,255,255,0.42); margin-bottom: 28px; line-height: 1.5; flex: 1; }
+.dash-next-btn {
+  display: inline-flex; align-items: center; gap: 8px; align-self: flex-start;
+  padding: 11px 22px; background: rgba(33,150,243,0.14); border: 1.5px solid rgba(33,150,243,0.28);
+  color: var(--sky-light); border-radius: var(--r-md);
+  font-family: 'DM Sans', sans-serif; font-size: 12px; font-weight: 700; letter-spacing: 0.5px;
+  cursor: pointer; transition: all var(--t-base);
+}
+.dash-next-btn:hover { background: var(--sky); border-color: var(--sky); color: white; }
+.dash-tip-card {
+  background: var(--white); border-radius: var(--r-xl); padding: 32px;
+  border: 1.5px solid var(--border-soft); box-shadow: var(--shadow-sm);
+  display: flex; flex-direction: column;
+}
+.dash-tip-eyebrow { font-size: 9px; letter-spacing: 2.5px; text-transform: uppercase; color: var(--sky); font-weight: 700; margin-bottom: 16px; }
+.dash-tip-text {
+  font-family: 'Cormorant Garamond', serif; font-size: 20px; font-weight: 500;
+  font-style: italic; color: var(--ink); line-height: 1.65;
+  border-left: 3px solid var(--sky); padding-left: 16px; flex: 1; margin: 0;
+}
+.dash-tip-attribution { font-size: 11px; color: var(--gray-1); font-weight: 600; letter-spacing: 0.5px; margin-top: 16px; }
+/* Dashboard tab active */
+.tab-btn.active-dashboard { color: white; background: rgba(255,255,255,0.11); border-color: rgba(255,255,255,0.18); }
+/* Dashboard responsive */
+@media (max-width: 1100px) {
+  .dash-progress-section { grid-template-columns: 1fr 1fr; }
+  .dash-stats-card { grid-column: span 2; flex-direction: row; align-items: center; padding: 22px 28px; }
+  .dash-stat-divider { width: 1px; height: 36px; margin: 0 16px; }
+  .dash-stat-row { flex-direction: column; text-align: center; gap: 4px; }
+}
+@media (max-width: 900px) {
+  .dash-hero { padding: 48px 24px 44px; }
+  .dash-hero-title { font-size: 38px; }
+  .dash-progress-section, .dash-modules-section, .dash-bottom-grid { padding-left: 24px; padding-right: 24px; }
+  .dash-progress-section { grid-template-columns: 1fr; }
+  .dash-stats-card { grid-column: span 1; flex-direction: column; }
+  .dash-stat-divider { width: auto; height: 1px; margin: 10px 0; }
+  .dash-bottom-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 600px) {
+  .dash-hero-title { font-size: 30px; }
+  .dash-ring-card { flex-direction: column; align-items: flex-start; }
+  .dash-modules-section { padding-top: 36px; }
+}
+
 </style>
 
 </head>
@@ -1430,7 +1659,7 @@ footer strong { color: rgba(255,255,255,0.5); }
 </header>
 
 <!-- HERO -->
-<div class="hero">
+<div class="hero" id="mainHero" style="display:none">
   <h1 class="cf-animate">Your Complete<br><em>Training Manual</em></h1>
   <p class="cf-animate cf-animate-delay-1">Your full movement library, organized by muscle group. Tap any card to pull up the full breakdown — instructions, modifications, and variations, whatever level you're at.</p>
   <div class="hero-stats cf-animate cf-animate-delay-2">
@@ -1451,9 +1680,8 @@ footer strong { color: rgba(255,255,255,0.5); }
 
 <!-- TAB NAVIGATION -->
 <nav class="tab-nav" id="tabNav">
-  <button class="tab-btn active-pilates" id="tabBtnPilates" onclick="switchTab('pilates')">
-    Pilates Training
-  </button>
+  <button class="tab-btn active-dashboard" id="tabBtnDashboard" onclick="switchTab('dashboard')">Dashboard</button>
+  <button class="tab-btn" id="tabBtnPilates" onclick="switchTab('pilates')">Pilates Training</button>
   <button class="tab-btn" id="tabBtnBarre" onclick="switchTab('barre')">
     Barre Training
   </button>
@@ -1466,7 +1694,7 @@ footer strong { color: rgba(255,255,255,0.5); }
 </nav>
 
 <!-- MASTERY TRACKER BANNER -->
-<div class="mastery-banner" id="masteryBanner">
+<div class="mastery-banner" id="masteryBanner" style="display:none">
   <div class="mastery-block">
     <div class="mastery-header">
       <div class="mastery-label">Pilates Mastery</div>
@@ -1495,7 +1723,175 @@ footer strong { color: rgba(255,255,255,0.5); }
 <!-- ═══════════════════════════════════════ -->
 <!--  PILATES TAB PANEL                     -->
 <!-- ═══════════════════════════════════════ -->
-<div class="tab-panel active" id="panelPilates">
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  DASHBOARD HOME                                        -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<div class="tab-panel active" id="panelDashboard">
+
+  <!-- WELCOME HERO -->
+  <div class="dash-hero">
+    <div class="dash-welcome-badge"><span class="dash-badge-dot"></span>Staff Training Portal</div>
+    <h1 class="dash-hero-title" id="dashGreetTitle">Good morning, Instructor</h1>
+    <p class="dash-hero-sub">Your complete movement library. Track your mastery, explore techniques, and build your expertise at your own pace.</p>
+    <div class="dash-hero-actions">
+      <button class="dash-cta-primary" id="dashMainCta" onclick="switchTab('pilates')">Start Training &rarr;</button>
+      <button class="dash-cta-secondary" onclick="switchTab('barre')">Barre Library</button>
+    </div>
+  </div>
+
+  <!-- PROGRESS RINGS -->
+  <div class="dash-progress-section">
+
+    <div class="dash-ring-card cf-animate">
+      <div class="dash-ring-wrap">
+        <svg viewBox="0 0 120 120" class="dash-ring" aria-hidden="true">
+          <circle class="ring-bg" cx="60" cy="60" r="52"/>
+          <circle class="ring-fill ring-pilates" cx="60" cy="60" r="52" id="dashPilatesRing"/>
+        </svg>
+        <div class="dash-ring-center">
+          <div class="dash-ring-pct" id="dashPilatesPct">0%</div>
+          <div class="dash-ring-label">Done</div>
+        </div>
+      </div>
+      <div class="dash-ring-info">
+        <div class="dash-ring-module-tag sky">Pilates</div>
+        <div class="dash-ring-title">Pilates Training</div>
+        <div class="dash-ring-count" id="dashPilatesCount">0 / 97 techniques</div>
+        <button class="dash-ring-btn sky" onclick="switchTab('pilates')">Continue &rarr;</button>
+      </div>
+    </div>
+
+    <div class="dash-ring-card cf-animate cf-animate-delay-1">
+      <div class="dash-ring-wrap">
+        <svg viewBox="0 0 120 120" class="dash-ring" aria-hidden="true">
+          <circle class="ring-bg" cx="60" cy="60" r="52"/>
+          <circle class="ring-fill ring-barre" cx="60" cy="60" r="52" id="dashBarreRing"/>
+        </svg>
+        <div class="dash-ring-center">
+          <div class="dash-ring-pct" id="dashBarrePct">0%</div>
+          <div class="dash-ring-label">Done</div>
+        </div>
+      </div>
+      <div class="dash-ring-info">
+        <div class="dash-ring-module-tag barre">Barre</div>
+        <div class="dash-ring-title">Barre Training</div>
+        <div class="dash-ring-count" id="dashBarreCount">0 / 66 techniques</div>
+        <button class="dash-ring-btn barre" onclick="switchTab('barre')">Continue &rarr;</button>
+      </div>
+    </div>
+
+    <div class="dash-stats-card cf-animate cf-animate-delay-2">
+      <div class="dash-stat-row">
+        <div class="dash-stat-big" id="dashTotalMastered">0</div>
+        <div class="dash-stat-label">Total<br>Mastered</div>
+      </div>
+      <div class="dash-stat-divider"></div>
+      <div class="dash-stat-row">
+        <div class="dash-stat-big" id="dashRemaining">163</div>
+        <div class="dash-stat-label">Still<br>To Learn</div>
+      </div>
+      <div class="dash-stat-divider"></div>
+      <div class="dash-stat-row">
+        <div class="dash-stat-big" id="dashOverallPct">0%</div>
+        <div class="dash-stat-label">Overall<br>Complete</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- TRAINING MODULES -->
+  <div class="dash-modules-section">
+    <div class="dash-section-header">
+      <h2>Training Modules</h2>
+      <p>Your full exercise library &mdash; organised by discipline</p>
+    </div>
+    <div class="dash-modules-grid">
+
+      <div class="dash-module-card dash-module-pilates cf-animate">
+        <div class="dash-module-badge">Core &amp; Reformer</div>
+        <h3>Pilates Training</h3>
+        <p>97 Pilates techniques across ab work, lower body, upper body, straps, and oblique training. From foundational to advanced.</p>
+        <div class="dash-module-progress-wrap">
+          <div class="dash-module-progress">
+            <div class="dash-module-progress-fill" id="dashModPilatesFill" style="width:0%"></div>
+          </div>
+          <div class="dash-module-meta">
+            <span id="dashModPilatesMeta">0 / 97 mastered</span>
+            <span>6 categories</span>
+          </div>
+        </div>
+        <button class="dash-module-btn" onclick="switchTab('pilates')">
+          <span id="dashModPilatesBtnText">Start Training</span>
+          <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </button>
+      </div>
+
+      <div class="dash-module-card dash-module-barre cf-animate cf-animate-delay-1">
+        <div class="dash-module-badge">Ballet &amp; Conditioning</div>
+        <h3>Barre Training</h3>
+        <p>66 Barre techniques spanning foundational barre work, standing sequences, and advanced conditioning exercises.</p>
+        <div class="dash-module-progress-wrap">
+          <div class="dash-module-progress">
+            <div class="dash-module-progress-fill" id="dashModBarreFill" style="width:0%"></div>
+          </div>
+          <div class="dash-module-meta">
+            <span id="dashModBarreMeta">0 / 66 mastered</span>
+            <span>2 categories</span>
+          </div>
+        </div>
+        <button class="dash-module-btn barre" onclick="switchTab('barre')">
+          <span id="dashModBarreBtnText">Start Training</span>
+          <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </button>
+      </div>
+
+      <div class="dash-module-card dash-module-formats cf-animate cf-animate-delay-2" id="dashModFormatsCard" style="display:none">
+        <div class="dash-module-badge">Class Design</div>
+        <h3>Class Formats</h3>
+        <p>Explore class structures, format options, and how to build effective Pilates and Barre experiences for your clients.</p>
+        <div class="dash-module-progress-wrap">
+          <div class="dash-module-progress">
+            <div class="dash-module-progress-fill" style="width:100%;background:linear-gradient(90deg,#10b981,#6ee7b7);box-shadow:0 0 8px rgba(16,185,129,0.4)"></div>
+          </div>
+          <div class="dash-module-meta">
+            <span>Reference Guide</span>
+            <span>Always Available</span>
+          </div>
+        </div>
+        <button class="dash-module-btn formats" onclick="switchTab('formats')">
+          <span>View Formats</span>
+          <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- NEXT UP + TIP -->
+  <div class="dash-bottom-grid">
+
+    <div class="dash-next-card cf-animate">
+      <div class="dash-next-label">Up Next</div>
+      <div class="dash-next-exercise" id="dashNextTitle">&mdash;</div>
+      <div class="dash-next-sub" id="dashNextSub">Begin your training journey</div>
+      <button class="dash-next-btn" id="dashNextBtn">
+        Go to Exercise
+        <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </button>
+    </div>
+
+    <div class="dash-tip-card cf-animate cf-animate-delay-1">
+      <div class="dash-tip-eyebrow">Instructor Tip</div>
+      <blockquote class="dash-tip-text" id="dashTipText">&ldquo;Master the fundamentals first &mdash; precise technique in the basics is more valuable than sloppy execution of advanced moves.&rdquo;</blockquote>
+      <div class="dash-tip-attribution" id="dashTipAttrib">&mdash; Training Principle</div>
+    </div>
+
+  </div>
+
+</div><!-- /panelDashboard -->
+
+<div class="tab-panel" id="panelPilates">
 
 <!-- SEARCH & FILTER -->
 <div class="search-wrap">
@@ -6097,6 +6493,11 @@ REMEMBER: Smooth transitions and flow will maximize the Smart 45 workout for cli
     document.getElementById('barreMasteryCount').innerHTML = barreCount + ' <span>/ ' + BARRE_TOTAL + ' techniques</span>';
     document.getElementById('barreMasteryFill').style.width = barrePct + '%';
     document.getElementById('barreMasteryPct').textContent = barrePct + '% complete';
+    // Refresh dashboard when visible
+    if (typeof buildDashboard === 'function') {
+      var dp = document.getElementById('panelDashboard');
+      if (dp && dp.classList.contains('active')) buildDashboard();
+    }
   }
 
   function injectMasteryButtons() {
@@ -6504,23 +6905,32 @@ REMEMBER: Smooth transitions and flow will maximize the Smart 45 workout for cli
 
   // ── TAB SWITCHING (extended for 4 tabs) ──
   function switchTab(tab) {
-    var panelMap = { pilates: 'panelPilates', barre: 'panelBarre', formats: 'panelFormats', admin: 'panelAdmin' };
-    var btnMap = { pilates: 'tabBtnPilates', barre: 'tabBtnBarre', formats: 'tabBtnFormats', admin: 'tabBtnAdmin' };
-    var activeClass = { pilates: 'active-pilates', barre: 'active-barre', formats: 'active-formats', admin: 'active-admin' };
+    var panelMap = { dashboard: 'panelDashboard', pilates: 'panelPilates', barre: 'panelBarre', formats: 'panelFormats', admin: 'panelAdmin' };
+    var btnMap = { dashboard: 'tabBtnDashboard', pilates: 'tabBtnPilates', barre: 'tabBtnBarre', formats: 'tabBtnFormats', admin: 'tabBtnAdmin' };
+    var activeClass = { dashboard: 'active-dashboard', pilates: 'active-pilates', barre: 'active-barre', formats: 'active-formats', admin: 'active-admin' };
 
     Object.keys(panelMap).forEach(function(t) {
       var panel = document.getElementById(panelMap[t]);
       if (panel) panel.classList.toggle('active', t === tab);
       var btn = document.getElementById(btnMap[t]);
       if (!btn) return;
-      // Only update className — never touch style.display here so hidden tabs stay hidden
       var base = 'tab-btn';
       if (t === 'admin') base += ' admin-only';
       if (t === tab) base += ' ' + activeClass[t];
       btn.className = base;
     });
 
-    // Populate admin lists when switching to admin tab
+    // Show/hide hero + mastery banner (only on training tabs)
+    var hero = document.getElementById('mainHero');
+    var mb   = document.getElementById('masteryBanner');
+    var isTraining = (tab === 'pilates' || tab === 'barre');
+    if (hero) hero.style.display = isTraining ? '' : 'none';
+    if (mb)   mb.style.display   = isTraining ? '' : 'none';
+
+    // Dashboard: rebuild data
+    if (tab === 'dashboard' && typeof buildDashboard === 'function') buildDashboard();
+
+    // Admin: populate lists
     if (tab === 'admin') {
       cfRenderAdminModuleList(window._cfModules || []);
       cfRenderAdminFormatList(window._cfFormats || []);
@@ -6833,6 +7243,11 @@ async function cfShowPortal(user) {
     typeof cfLoadTrainingModules === 'function' ? cfLoadTrainingModules() : Promise.resolve(),
     typeof cfLoadClassFormats === 'function' ? cfLoadClassFormats() : Promise.resolve()
   ]);
+  // Land on dashboard, show formats module card
+  if (typeof switchTab === 'function') switchTab('dashboard');
+  var fmtCard = document.getElementById('dashModFormatsCard');
+  if (fmtCard) fmtCard.style.display = '';
+  if (typeof buildDashboard === 'function') setTimeout(buildDashboard, 150);
 }
 
 function cfShowGate() {
@@ -6859,8 +7274,8 @@ function cfShowGate() {
   var adminBtn = document.getElementById('tabBtnAdmin');
   if (adminBtn) adminBtn.style.display = 'none';
 
-  // Switch back to pilates tab so portal resets visually
-  if (typeof switchTab === 'function') switchTab('pilates');
+  // Reset to dashboard view (auth gate will cover it)
+  if (typeof switchTab === 'function') switchTab('dashboard');
 
   var gate = document.getElementById('authGate');
   if (gate) gate.style.display = 'flex';
@@ -7072,6 +7487,126 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 <script>
+
+  // ── INSTRUCTOR TIPS ──────────────────────────────────────────────────────
+  var CF_TIPS = [
+    { text: "When cueing a Plank, have clients push the floor away with their hands — this activates serratus anterior and prevents the shoulders from sinking.", attrib: "Alignment Cue" },
+    { text: "In Pilates ab work, the exhale happens at maximum exertion. This natural intra-abdominal pressure protects the spine throughout the movement.", attrib: "Breathing Principle" },
+    { text: "For any lunge variation, the front knee stays directly over the ankle — never forward of the toes — to protect the joint long-term.", attrib: "Biomechanics" },
+    { text: "Barre plies are most effective with a lengthened tailbone, not a tucked pelvis. Neutral alignment gives full glute and inner thigh activation.", attrib: "Barre Fundamentals" },
+    { text: "When teaching reformer arm work, weight should be over the wrist, not the palm. This small adjustment prevents shoulder impingement over time.", attrib: "Upper Body Safety" },
+    { text: "The Saw exercise trains thoracic rotation, not lumbar. Cue clients to keep the pelvis square while only the ribcage rotates toward the front leg.", attrib: "Spinal Movement" },
+    { text: "For oblique work, cue lifting the ribs away from the hip — this produces true lateral flexion rather than a compensatory hip hike.", attrib: "Oblique Cueing" },
+    { text: "In all releve work, distribute weight evenly across all five toes. Pay special attention to the pinky toe side to prevent supination.", attrib: "Foot Alignment" },
+    { text: "Bridge work is deeper with a small ball between the thighs. It activates the inner spiral of the leg and deepens the entire posterior chain.", attrib: "Glute Activation" },
+    { text: "Spring tension should challenge control, not override it. If a client is gripping or holding their breath, reduce the spring immediately.", attrib: "Spring Selection" },
+    { text: "The abdominals wrap around the torso like a corset. Cue clients to draw the navel toward the spine AND narrow the waist simultaneously.", attrib: "Core Engagement" },
+    { text: "Consistency beats intensity. A client who trains three times a week with perfect form will progress faster than one who trains daily with poor alignment.", attrib: "Programming Principle" }
+  ];
+
+  // ── BUILD DASHBOARD ───────────────────────────────────────────────────────
+  function buildDashboard() {
+    // Time-based greeting
+    var h = new Date().getHours();
+    var greet = h < 12 ? 'Good morning' : h < 17 ? 'Good afternoon' : 'Good evening';
+    var titleEl = document.getElementById('dashGreetTitle');
+    if (titleEl) titleEl.textContent = greet + ', Instructor';
+
+    // Count mastery per discipline
+    var pilatesCount = 0, barreCount = 0;
+    document.querySelectorAll('.exercise-card[id]').forEach(function(card) {
+      if (!window._masteryData || !window._masteryData[card.id]) return;
+      if (card.closest('#panelBarre')) barreCount++;
+      else pilatesCount++;
+    });
+    var PT = 97, BT = 66, TOTAL = PT + BT;
+    var totalMastered = pilatesCount + barreCount;
+    var pilatesPct = Math.round((pilatesCount / PT) * 100);
+    var barrePct   = Math.round((barreCount   / BT) * 100);
+    var overallPct = Math.round((totalMastered / TOTAL) * 100);
+    var circ = 326.73; // 2 * PI * 52
+
+    // Animate SVG rings
+    function setRing(id, pct) {
+      var el = document.getElementById(id);
+      if (el) el.style.strokeDashoffset = (circ * (1 - pct / 100)).toFixed(2);
+    }
+    setRing('dashPilatesRing', pilatesPct);
+    setRing('dashBarreRing',   barrePct);
+
+    // Update text
+    function setText(id, val) { var el = document.getElementById(id); if (el) el.textContent = val; }
+    setText('dashPilatesPct',   pilatesPct + '%');
+    setText('dashPilatesCount', pilatesCount + ' / ' + PT + ' techniques');
+    setText('dashBarrePct',     barrePct + '%');
+    setText('dashBarreCount',   barreCount + ' / ' + BT + ' techniques');
+    setText('dashTotalMastered', totalMastered);
+    setText('dashRemaining',     TOTAL - totalMastered);
+    setText('dashOverallPct',    overallPct + '%');
+
+    // Module cards
+    var pf = document.getElementById('dashModPilatesFill'); if (pf) pf.style.width = pilatesPct + '%';
+    var bf = document.getElementById('dashModBarreFill');   if (bf) bf.style.width = barrePct   + '%';
+    setText('dashModPilatesMeta', pilatesCount + ' / ' + PT + ' mastered');
+    setText('dashModBarreMeta',   barreCount   + ' / ' + BT + ' mastered');
+    setText('dashModPilatesBtnText', pilatesCount > 0 ? 'Continue Training' : 'Start Training');
+    setText('dashModBarreBtnText',   barreCount   > 0 ? 'Continue Training' : 'Start Training');
+
+    // Main CTA
+    var ctaBtn = document.getElementById('dashMainCta');
+    if (ctaBtn) {
+      if (totalMastered > 0) {
+        ctaBtn.textContent = 'Continue Training';
+        ctaBtn.onclick = function() { switchTab(pilatesCount >= barreCount ? 'pilates' : 'barre'); };
+      } else {
+        ctaBtn.textContent = 'Start Training';
+        ctaBtn.onclick = function() { switchTab('pilates'); };
+      }
+    }
+
+    // Next Up — first unmastered exercise
+    var nextCard = null;
+    document.querySelectorAll('.exercise-card[id]').forEach(function(card) {
+      if (!nextCard && !(window._masteryData && window._masteryData[card.id])) nextCard = card;
+    });
+    if (nextCard) {
+      var nt = nextCard.querySelector('.card-title');
+      var nm = nextCard.querySelector('.badge-category, .meta-badge');
+      setText('dashNextTitle', nt ? nt.textContent.trim() : 'First Exercise');
+      setText('dashNextSub',   nm ? nm.textContent.trim() : 'Pilates Training');
+      var nb = document.getElementById('dashNextBtn');
+      if (nb) {
+        var inBarre = !!nextCard.closest('#panelBarre');
+        nb.onclick = function() {
+          switchTab(inBarre ? 'barre' : 'pilates');
+          setTimeout(function() {
+            nextCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            nextCard.style.boxShadow = '0 0 0 3px var(--sky), var(--shadow-md)';
+            setTimeout(function() { nextCard.style.boxShadow = ''; }, 2000);
+          }, 420);
+        };
+      }
+    } else if (totalMastered > 0) {
+      setText('dashNextTitle', 'All techniques mastered!');
+      setText('dashNextSub',   'Outstanding work — the entire library is complete.');
+    }
+
+    // Rotating instructor tip (daily)
+    var tipIdx = new Date().getDate() % CF_TIPS.length;
+    var tip = CF_TIPS[tipIdx];
+    var tipEl = document.getElementById('dashTipText');
+    if (tipEl) tipEl.textContent = '"' + tip.text + '"';
+    var attEl = document.getElementById('dashTipAttrib');
+    if (attEl) attEl.textContent = '\u2014 ' + tip.attrib;
+
+    // Trigger enter animations
+    setTimeout(function() {
+      document.querySelectorAll('#panelDashboard .cf-animate').forEach(function(el) {
+        el.classList.add('cf-in');
+      });
+    }, 80);
+  }
+
 // ── TOAST NOTIFICATION ──────────────────────────────────────────────────────
 function cfShowToast(msg) {
   var t = document.getElementById('cfToast');
