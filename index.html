@@ -7120,6 +7120,7 @@ var _sb = null;
 var _cfUser = null;
 var _cfIsAdmin = false;
 var _masteryData = {};
+var _cfDisplayName = null;
 
 // Init Supabase — runs as soon as this script tag executes
 // The SDK script tag is above this one so window.supabase is already defined
@@ -7213,6 +7214,24 @@ function cfLoadMastery() {
   });
 }
 
+// cfUpsertProfile — sync user into profiles table, fetch display_name
+function cfUpsertProfile(user) {
+  if (!_sb || !user) return Promise.resolve(null);
+  return _sb.from('profiles')
+    .upsert({ id: user.id, email: user.email, updated_at: new Date().toISOString() }, { onConflict: 'id' })
+    .select('display_name')
+    .single()
+    .then(function(r) {
+      _cfDisplayName = (r.data && r.data.display_name) ? r.data.display_name : null;
+      return r.data;
+    })
+    .catch(function(e) {
+      console.warn('cfUpsertProfile error:', e);
+      _cfDisplayName = null;
+      return null;
+    });
+}
+
 // cfApplyRoleUI — show/hide tabs and elements based on admin status
 function cfApplyRoleUI() {
   var fmtBtn = document.getElementById('tabBtnFormats');
@@ -7235,9 +7254,13 @@ async function cfShowPortal(user) {
   if (badge) badge.classList.add('visible');
   var email = document.getElementById('userEmailDisplay');
   if (email) email.textContent = user.email;
+  // Update display name in badge if element exists
+  var dnEl = document.getElementById('userDisplayNameBadge');
+  if (dnEl) dnEl.textContent = _cfDisplayName || user.email.split('@')[0];
 
   cfApplyRoleUI();
   await cfLoadMastery();
+  await cfUpsertProfile(user);
   if (typeof injectMasteryButtons === 'function') injectMasteryButtons();
   await Promise.all([
     typeof cfLoadTrainingModules === 'function' ? cfLoadTrainingModules() : Promise.resolve(),
@@ -7255,6 +7278,7 @@ function cfShowGate() {
   _cfUser = null;
   _cfIsAdmin = false;
   _masteryData = {};
+  _cfDisplayName = null;
 
   // Clear all mastery visual state from the DOM
   document.querySelectorAll('.exercise-card.mastered').forEach(function(c) { c.classList.remove('mastered'); });
@@ -7510,7 +7534,10 @@ document.addEventListener('DOMContentLoaded', function() {
     var h = new Date().getHours();
     var greet = h < 12 ? 'Good morning' : h < 17 ? 'Good afternoon' : 'Good evening';
     var titleEl = document.getElementById('dashGreetTitle');
-    if (titleEl) titleEl.textContent = greet + ', Instructor';
+    var firstName = window._cfDisplayName
+      ? window._cfDisplayName.split(' ')[0]
+      : (window._cfUser && window._cfUser.email ? window._cfUser.email.split('@')[0] : 'Instructor');
+    if (titleEl) titleEl.textContent = greet + ', ' + firstName;
 
     // Count mastery per discipline
     var pilatesCount = 0, barreCount = 0;
