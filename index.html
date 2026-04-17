@@ -7715,8 +7715,9 @@ document.addEventListener('DOMContentLoaded', function() {
       setText('dashNextSub',   'Outstanding work — the entire library is complete.');
     }
 
-    // Rotating instructor tip (daily)
-    var tipIdx = new Date().getDate() % CF_TIPS.length;
+    // Rotating instructor tip (every 12 hours — changes at midnight and noon)
+    var d = new Date();
+    var tipIdx = (d.getDate() * 2 + (d.getHours() < 12 ? 0 : 1)) % CF_TIPS.length;
     var tip = CF_TIPS[tipIdx];
     var tipEl = document.getElementById('dashTipText');
     if (tipEl) tipEl.textContent = '"' + tip.text + '"';
