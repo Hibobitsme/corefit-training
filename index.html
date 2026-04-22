@@ -1169,6 +1169,13 @@ header::after {
 .formats-section-body.open { display: block; animation: slideDown 0.24s cubic-bezier(0.4,0,0.2,1); }
 .formats-section-body.barre-body .format-card-title { color: var(--barre-deep); }
 .formats-section-body.barre-body .format-card:hover { box-shadow: var(--shadow-barre); }
+.formats-section-header.bounce { background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%); border-bottom: 1.5px solid var(--border); }
+.formats-section-header.bounce:hover { background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%); }
+.formats-section-icon.bounce { background: linear-gradient(145deg, #10b981, #059669); color: white; box-shadow: 0 4px 14px rgba(16,185,129,0.35); }
+.formats-section-title.bounce { color: var(--ink); }
+.formats-section-count.bounce { color: #10b981; }
+.formats-section-body.bounce-body .format-card-title { color: #065f46; }
+.formats-section-body.bounce-body .format-card:hover { box-shadow: 0 8px 28px rgba(16,185,129,0.15); }
 
 .format-card { background: var(--white); border: 1.5px solid var(--border-soft); border-radius: var(--r-md); margin-bottom: 10px; overflow: hidden; transition: box-shadow var(--t-base), transform var(--t-base); box-shadow: var(--shadow-xs); }
 .format-card:hover { box-shadow: var(--shadow-md); transform: translateY(-1px); }
@@ -6259,7 +6266,7 @@ footer strong { color: rgba(255,255,255,0.5); }
   <div class="formats-intro">
     <div class="section-tag">Class Templates</div>
     <h2 class="section-title">Class Formats</h2>
-    <p class="section-desc">Reference templates for structuring Pilates and Barre sessions. Expand any format to view the full outline.</p>
+    <p class="section-desc">Reference templates for structuring Pilates, Barre, and Bounce sessions. Expand any format to view the full outline.</p>
   </div>
   <div class="formats-body">
 
@@ -6356,7 +6363,7 @@ Clients with tight schedules who refuse to compromise on results.</div>
           <div class="formats-section-icon barre">✦</div>
           <div>
             <div class="formats-section-title barre">Barre Classes</div>
-            <div class="formats-section-count barre" id="barreFormatCount">3 formats</div>
+            <div class="formats-section-count barre" id="barreFormatCount">2 formats</div>
           </div>
         </div>
         <div class="formats-section-chevron" id="barreChevron">&#8964;</div>
@@ -6415,6 +6422,26 @@ All fitness levels — whether brand new to barre or returning after a break, th
           </div>
         </div>
 
+        <!-- DB-loaded Barre formats -->
+        <div id="formatsBarreList"></div>
+
+      </div>
+    </div>
+
+    <!-- ── BOUNCE SECTION ACCORDION ── -->
+    <div class="formats-section" id="formatsSectionBounce">
+      <div class="formats-section-header bounce" onclick="toggleFormatsSection('bounce')">
+        <div class="formats-section-header-left">
+          <div class="formats-section-icon bounce">✦</div>
+          <div>
+            <div class="formats-section-title bounce">Bounce Classes</div>
+            <div class="formats-section-count bounce" id="bounceFormatCount">1 format</div>
+          </div>
+        </div>
+        <div class="formats-section-chevron" id="bounceChevron">&#8964;</div>
+      </div>
+      <div class="formats-section-body bounce-body" id="formatsBounceBody">
+
         <div class="format-card" id="fmt-bounce">
           <div class="format-card-header" onclick="toggleFormatCard(this)">
             <div>
@@ -6436,9 +6463,6 @@ WHO IT'S FOR
 Any instructor or client ready to elevate their barre practice with added intensity and energy. Guaranteed to leave you with some pep in your step!</div>
           </div>
         </div>
-
-        <!-- DB-loaded Barre formats -->
-        <div id="formatsBarreList"></div>
 
       </div>
     </div>
@@ -6824,10 +6848,10 @@ Any instructor or client ready to elevate their barre practice with added intens
 
   // ── FORMAT SECTION ACCORDION ──
   function toggleFormatsSection(type) {
-    var bodyId = type === 'barre' ? 'formatsBarreBody' : 'formatsPilatesBody';
-    var chevronId = type === 'barre' ? 'barreChevron' : 'pilatesChevron';
-    var body = document.getElementById(bodyId);
-    var chevron = document.getElementById(chevronId);
+    var bodyMap    = { barre: 'formatsBarreBody', pilates: 'formatsPilatesBody', bounce: 'formatsBounceBody' };
+    var chevronMap = { barre: 'barreChevron',     pilates: 'pilatesChevron',     bounce: 'bounceChevron'    };
+    var body = document.getElementById(bodyMap[type]);
+    var chevron = document.getElementById(chevronMap[type]);
     if (!body) return;
     var isOpen = body.classList.contains('open');
     body.classList.toggle('open', !isOpen);
